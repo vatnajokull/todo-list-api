@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "attributes": {
+        "name": "Task name"
+      },
+      "type": "tasks"
+    }
+  ]
+}

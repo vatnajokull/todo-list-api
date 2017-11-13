@@ -1,0 +1,18 @@
+{
+  "data": {
+    "attributes": {
+      "name": "New project name"
+    },
+    "relationships": {
+      "tasks": {
+      },
+      "user": {
+      }
+    },
+    "id": "1",
+    "links": {
+      "self": "http://www.example.com/api/v1/projects/1"
+    },
+    "type": "projects"
+  }
+}

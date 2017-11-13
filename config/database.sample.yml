@@ -1,0 +1,9 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  username: postgres
+  password:
+
+test:
+  <<: *default
+  database: todo_list_api_test

@@ -1,0 +1,624 @@
+{
+  "swagger": "2.0",
+  "basePath": "/api/v1",
+  "info": {
+    "title": "ToDo List API",
+    "version": "v1"
+  },
+  "produces": [
+    "application/vnd.api+json"
+  ],
+  "consumes": [
+    "application/vnd.api+json"
+  ],
+  "securityDefinitions": {
+    "access_token": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "access-token"
+    },
+    "token_type": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "token-type"
+    },
+    "client": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "client"
+    },
+    "uid": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "uid"
+    }
+  },
+  "security": [
+    {
+      "access_token": [
+
+      ],
+      "token_type": [
+
+      ],
+      "client": [
+
+      ],
+      "uid": [
+
+      ]
+    }
+  ],
+  "paths": {
+    "/auth/sign_in": {
+      "post": {
+        "summary": "User authentication",
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information",
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": 1,
+                  "email": "test@example.com",
+                  "provider": "email",
+                  "uid": "test@example.com"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid login credentials"
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "summary": "User registration",
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "password_confirmation": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information",
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": 1,
+                  "email": "test@example.com",
+                  "provider": "email",
+                  "uid": "test@example.com",
+                  "created_at": "2017-11-07T09:23:16.276+02:00",
+                  "updated_at": "2017-11-07T09:23:16.451+02:00"
+                },
+                "status": "success"
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid request"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "get": {
+        "summary": "A list of Projects",
+        "tags": [
+          "Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Projects",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": [
+                  {
+                    "attributes": {
+                      "name": "Project name"
+                    },
+                    "relationships": {
+                      "tasks": {
+                      },
+                      "user": {
+                      }
+                    },
+                    "id": "1",
+                    "links": {
+                      "self": "http://www.example.com/api/v1/projects/1"
+                    },
+                    "type": "projects"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a Project",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "attributes": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Project",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "name": "Project name"
+                  },
+                  "relationships": {
+                    "tasks": {
+                    },
+                    "user": {
+                    }
+                  },
+                  "id": "1",
+                  "links": {
+                    "self": "http://www.example.com/api/v1/projects/1"
+                  },
+                  "type": "projects"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}": {
+      "get": {
+        "summary": "Shows the Project",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shows the Project",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "name": "Project name"
+                  },
+                  "relationships": {
+                    "tasks": {
+                    },
+                    "user": {
+                    }
+                  },
+                  "id": "1",
+                  "links": {
+                    "self": "http://www.example.com/api/v1/projects/1"
+                  },
+                  "type": "projects"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates the Project",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "attributes": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Updated Project",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "name": "New project name"
+                  },
+                  "relationships": {
+                    "tasks": {
+                    },
+                    "user": {
+                    }
+                  },
+                  "id": "1",
+                  "links": {
+                    "self": "http://www.example.com/api/v1/projects/1"
+                  },
+                  "type": "projects"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes the Project",
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns nothing"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/tasks": {
+      "get": {
+        "summary": "A list of Tasks",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Tasks",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": [
+                  {
+                    "attributes": {
+                      "name": "Task name"
+                    },
+                    "type": "tasks"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a Task",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "attributes": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Task",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "name": "Task name"
+                  },
+                  "type": "tasks"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors"
+          }
+        }
+      }
+    },
+    "/tasks/{task_id}": {
+      "get": {
+        "summary": "Shows the Task",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shows the Task",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "name": "Task name"
+                  },
+                  "type": "tasks"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates the Task",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "attributes": {
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Updated Task",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "name": "New task name"
+                  },
+                  "type": "tasks"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes the Task",
+        "tags": [
+          "Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns nothing"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+  }
+}
