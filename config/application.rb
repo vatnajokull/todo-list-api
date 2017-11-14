@@ -12,6 +12,7 @@ require 'action_cable/engine'
 # require 'sprockets/railtie'
 # require 'rails/test_unit/railtie'
 require './app/middlewares/catch_json_parse_errors'
+require './lib/task_operations'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.

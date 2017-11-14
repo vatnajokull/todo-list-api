@@ -11,6 +11,10 @@ class TaskPolicy < ApplicationPolicy
     owner?
   end
 
+  def change_position?
+    owner?
+  end
+
   def destroy?
     owner?
   end

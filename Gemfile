@@ -4,6 +4,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 ruby '2.4.2'
 
+gem 'acts_as_list'
 gem 'devise'
 gem 'devise_token_auth'
 gem 'jsonapi-utils'

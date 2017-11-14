@@ -3,10 +3,12 @@ RSpec.describe Task, type: :model do
     it { is_expected.to have_db_column(:name).of_type(:string) }
     it { is_expected.to have_db_column(:done).of_type(:boolean) }
     it { is_expected.to have_db_column(:due_date).of_type(:datetime) }
+    it { is_expected.to have_db_column(:position).of_type(:integer).with_options(default: 0) }
   end
 
   context 'Associations' do
     it { is_expected.to belong_to(:project) }
+    it { is_expected.to have_many(:comments).dependent(:destroy) }
   end
 
   context 'Validations' do
@@ -31,6 +33,23 @@ RSpec.describe Task, type: :model do
       outdated_task = FactoryBot.create(:task, :with_due_date_in_past, project_id: project.id)
 
       expect { outdated_task.update(name: FFaker::HipsterIpsum.sentence) }.to change { outdated_task.name }
+    end
+  end
+
+  describe ".change_position" do
+    before(:all) do
+      project = FactoryBot.create(:project)
+      @tasks = FactoryBot.create_list(:task, 5, project_id: project.id)
+    end
+
+    it 'should move task up (change position by -1) in the project' do
+      current_task = @tasks[1]
+      expect { current_task.change_position(:up) }.to change { current_task.position }.by(-1)
+    end
+
+    it 'should move task down (change position by +1) in the project' do
+      current_task = @tasks[0]
+      expect { current_task.change_position(:down) }.to change { current_task.position }.by(1)
     end
   end
 end
