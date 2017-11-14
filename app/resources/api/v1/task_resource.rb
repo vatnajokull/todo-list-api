@@ -1,7 +1,7 @@
 module Api
   module V1
     class TaskResource < JSONAPI::Resource
-      attributes :name, :due_date
+      attributes :name, :due_date, :position, :comments_count
     end
   end
 end
