@@ -1,6 +1,6 @@
 module Api
   module V1
-    class CommentsController < ApplicationController
+    class CommentsController < ApiController
       def index
         jsonapi_render json: policy_scope(Comment).all
       end

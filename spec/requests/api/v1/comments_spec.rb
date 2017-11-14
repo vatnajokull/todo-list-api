@@ -13,11 +13,11 @@ RSpec.describe 'Comments', type: :request do
       parameter name: :task_id, in: :path, type: :integer
 
       response '200', 'A list of Comments' do
-        let!(:comment_one) { create(:comment, body: 'New cool comment!', task: task) }
+        let!(:comment_one) { create(:comment, body: 'New awesome comment', task: task) }
         let!(:comment_two) { create(:comment) }
 
         it 'returns a list of Comments' do |example|
-          get api_v1_task_comments(task), headers: tokens
+          get api_v1_task_comments_path(task), headers: tokens
 
           expect(body).to be_json_eql response_schema(:comments, :index).to_json
 
@@ -70,7 +70,7 @@ RSpec.describe 'Comments', type: :request do
 
       response '422', 'Validation errors' do
         it 'returns an error' do |example|
-          params = { data: { type: :tasks, attributes: { body: FFaker::Lorem.paragraphs.join(', ') } } }
+          params = { data: { type: :comments, attributes: { body: FFaker::Lorem.paragraphs.join(', ') } } }
 
           post api_v1_task_comments_path(task), params: params, headers: tokens
 
