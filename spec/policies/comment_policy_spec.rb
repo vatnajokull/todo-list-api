@@ -14,6 +14,8 @@ RSpec.describe CommentPolicy do
 
   permissions '.scope' do
     it 'returns Comments that belongs to Task' do
+      user
+      comment
       expect(CommentPolicy::Scope.new(user, Comment.all).resolve).to include(comment)
     end
 
