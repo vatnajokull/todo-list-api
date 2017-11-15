@@ -1,6 +1,7 @@
 {
   "data": {
     "attributes": {
+      "done": false,
       "due-date": null,
       "name": "Task name"
     },

@@ -15,20 +15,20 @@ RSpec.describe Task, type: :model do
 
   context 'with task that were created earlier and does not have due-date' do
     it 'should raise an error in due_date validation' do
-      project = FactoryBot.create(:project)
-      task = FactoryBot.create(:task, project_id: project.id)
-      task.due_date = Time.now - 2.days
+      project = create(:project)
+      task = create(:task, project_id: project.id)
+      task.due_date = Time.zone.now - 2.days
 
       expect(task).to be_invalid
       expect(task.errors[:due_date].size).to eq(1)
-      expect(task.errors[:due_date][0]).to eq("can not be in the past")
+      expect(task.errors[:due_date][0]).to eq('can not be in the past')
     end
   end
 
   context 'with task that were created earlier and have due-date in the past' do
     it 'should be updated without calls due_date validation' do
-      project = FactoryBot.create(:project)
-      outdated_task = FactoryBot.create(:task, :with_due_date_in_past, project_id: project.id)
+      project = create(:project)
+      outdated_task = create(:task, :with_due_date_in_past, project_id: project.id)
 
       expect { outdated_task.update(name: FFaker::HipsterIpsum.sentence) }.to change { outdated_task.name }
     end

@@ -1,10 +1,9 @@
 {
   "data": {
     "attributes": {
-      "done": false,
       "due-date": null,
-      "name": "Task name"
+      "name": "New task name"
     },
-    "type": "tasks"
+    "type": "complete"
   }
 }
