@@ -1,0 +1,16 @@
+{
+  "data": {
+    "attributes": {
+      "comments-count": 0,
+      "done": false,
+      "due-date": null,
+      "name": "New task",
+      "position": 3
+    },
+    "relationships": {
+      "comments": {
+      }
+    },
+    "type": "positions"
+  }
+}

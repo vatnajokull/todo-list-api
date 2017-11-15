@@ -1,17 +1,5 @@
-class TaskPolicy < ApplicationPolicy
-  def show?
-    owner?
-  end
-
-  def create?
-    owner?
-  end
-
+class PositionPolicy < ApplicationPolicy
   def update?
-    owner?
-  end
-
-  def destroy?
     owner?
   end
 

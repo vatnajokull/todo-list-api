@@ -1,6 +1,6 @@
 module Api
   module V1
-    class PositionResource < JSONAPI::Resource
+    class PositionResource < TaskResource
     end
   end
 end

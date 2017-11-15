@@ -1,5 +1,4 @@
 class Task < ApplicationRecord
-  include TaskOperations
   belongs_to :project
   has_many :comments, dependent: :destroy
   acts_as_list scope: :project, top_of_list: 0
