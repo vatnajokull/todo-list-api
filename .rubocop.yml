@@ -33,3 +33,7 @@ Documentation:
 
 FrozenStringLiteralComment:
   Enabled: false
+
+AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/models/task_spec.rb'

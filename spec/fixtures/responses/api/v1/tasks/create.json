@@ -1,6 +1,7 @@
 {
   "data": {
     "attributes": {
+      "due_date": null,
       "name": "Task name"
     },
     "type": "tasks"
