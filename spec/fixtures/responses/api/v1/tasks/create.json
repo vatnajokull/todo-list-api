@@ -1,9 +1,16 @@
 {
   "data": {
     "attributes": {
-      "due-date": null,
-      "name": "Task name"
+      "comments-count": 0,
+       "done": false,
+       "due-date": null,
+       "name": "Task name",
+       "position": 0
     },
+    "relationships": {
+       "comments": {
+       }
+     },
     "type": "tasks"
   }
 }

@@ -1,9 +1,16 @@
 {
   "data": {
     "attributes": {
-      "due-date": "2099-12-31T23:59:59.000+02:00",
-      "name": "New task name"
+      "comments-count": 0,
+       "done": false,
+       "due-date": "2099-12-31T23:59:59.000+02:00",
+       "name": "New task name",
+       "position": 0
     },
+    "relationships": {
+       "comments": {
+       }
+     },
     "type": "tasks"
   }
 }
