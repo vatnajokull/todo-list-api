@@ -35,21 +35,4 @@ RSpec.describe Task, type: :model do
       expect { outdated_task.update(name: FFaker::HipsterIpsum.sentence) }.to change { outdated_task.name }
     end
   end
-
-  describe '.change_position' do
-    before(:all) do
-      project = create(:project)
-      @tasks = create_list(:task, 5, project_id: project.id)
-    end
-
-    it 'should move task up (change position by -1) in the project' do
-      current_task = @tasks[1]
-      expect { current_task.change_position(:up) }.to change { current_task.position }.by(-1)
-    end
-
-    it 'should move task down (change position by +1) in the project' do
-      current_task = @tasks[0]
-      expect { current_task.change_position(:down) }.to change { current_task.position }.by(1)
-    end
-  end
 end

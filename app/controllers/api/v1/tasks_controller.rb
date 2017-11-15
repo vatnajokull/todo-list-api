@@ -31,16 +31,6 @@ module Api
         end
       end
 
-      def change_position
-        task = authorize Task.find(params[:id])
-
-        if task.change_position(params[:direction].to_sym)
-          jsonapi_render json: policy_scope(Task).all, status: :ok
-        else
-          jsonapi_render_errors json: task, status: :unprocessable_entity
-        end
-      end
-
       def destroy
         task = authorize Task.find(params[:id])
 
