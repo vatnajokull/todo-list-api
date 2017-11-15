@@ -13,7 +13,7 @@ class CommentPolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      scope.includes(:task).where("task_id IN (?)", user.projects.map { |project| project.tasks.ids }.flatten!)
+      scope.includes(:task).where('task_id IN (?)', user.projects.map { |project| project.tasks.ids }.flatten!)
     end
   end
 
