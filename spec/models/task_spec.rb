@@ -1,5 +1,5 @@
 RSpec.describe Task, type: :model do
-  let(:project) { create(:project) }
+  let(:project) { build_stubbed(:project) }
   let(:task) { build(:task, project: project, due_date: Time.current - 2.days) }
 
   context 'Structure' do
@@ -26,9 +26,7 @@ RSpec.describe Task, type: :model do
 
   context 'with task that were created earlier and have due_date in the past' do
     it 'should be updated without calls due_date validation' do
-      outdated_task = create(:task, :with_due_date_in_past, project: project)
-
-      expect { outdated_task.update(attributes_for(:task)) }.to change { outdated_task.name }
+      expect { task.update(attributes_for(:task)) }.to change { task.name }
     end
   end
 end
