@@ -27,8 +27,6 @@ HasAndBelongsToMany:
 
 Metrics/LineLength:
   Max: 120
-  Exclude:
-    - 'spec/**/*'
 
 Documentation:
   Enabled: false
