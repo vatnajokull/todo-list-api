@@ -134,34 +134,30 @@ RSpec.describe 'Tasks', type: :request do
 
       response '201', 'Updated Task' do
         it 'returns updated Task' do |example|
-          params = { data: { id: task.id, type: :tasks, attributes: { name: 'New task name', 'due-date': '2099-12-31T23:59:59+02:00' } } }
+          params = { data: { id: task.id, type: :tasks, attributes: { name: 'New task name', 'due_date': '2099-12-31T23:59:59+02:00' } } }
 
           patch api_v1_task_path(task), params: params, headers: tokens
 
-          expect(body).to be_json_eql response_schema(:tasks, :update_with_due_date).to_json
+          expect(body).to be_json_eql response_schema(:tasks, :update).to_json
 
           assert_response_matches_metadata(example.metadata)
         end
 
-        examples 'application/vnd.api+json' => response_schema(:tasks, :update_with_due_date)
+        examples 'application/vnd.api+json' => response_schema(:tasks, :update)
       end
 
       response '422', 'Validation errors' do
-        it 'returns an error if name is empty' do |example|
-          params = { data: { id: task.id, type: :tasks, attributes: { name: '' } } }
+        it 'returns an error if name is empty or due_date in the past' do |example|
+          params = { data: { id: task.id, type: :tasks, attributes: { name: '', 'due_date': '1999-12-31T23:59:59+02:00' } } }
 
           patch api_v1_task_path(task), params: params, headers: tokens
+
+          expect(body).to be_json_eql response_schema(:tasks, :errors).to_json
 
           assert_response_matches_metadata(example.metadata)
         end
 
-        it 'returns an error if due_date in the past' do |example|
-          params = { data: { id: task.id, type: :tasks, attributes: { name: 'New name', 'due-date': '1999-12-31T23:59:59+02:00' } } }
-
-          patch api_v1_task_path(task), params: params, headers: tokens
-
-          assert_response_matches_metadata(example.metadata)
-        end
+        examples 'application/vnd.api+json' => response_schema(:tasks, :errors)
       end
     end
   end

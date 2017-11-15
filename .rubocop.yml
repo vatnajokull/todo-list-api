@@ -27,9 +27,15 @@ HasAndBelongsToMany:
 
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - 'spec/**/*'
 
 Documentation:
   Enabled: false
 
 FrozenStringLiteralComment:
   Enabled: false
+
+AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/models/task_spec.rb'
