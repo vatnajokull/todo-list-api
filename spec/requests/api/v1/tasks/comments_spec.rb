@@ -13,13 +13,22 @@ RSpec.describe 'Comments', type: :request do
       parameter name: :task_id, in: :path, type: :integer
 
       response '200', 'A list of Comments' do
-        let!(:comment_one) { create(:comment, body: 'New awesome comment', task: task) }
-        let!(:comment_two) { create(:comment) }
+        it 'returns a list of Comments without images' do |example|
+          create(:comment, body: 'New awesome comment', task: task)
 
-        it 'returns a list of Comments' do |example|
           get api_v1_task_comments_path(task), headers: tokens
 
           expect(body).to be_json_eql response_schema(:comments, :index).to_json
+
+          assert_response_matches_metadata(example.metadata)
+        end
+
+        it 'returns a list of Comments with images' do |example|
+          create(:comment, :with_image, task: task)
+
+          get api_v1_task_comments_path(task), headers: tokens
+
+          expect(body).to have_json_path('data/0/attributes/image/thumb')
 
           assert_response_matches_metadata(example.metadata)
         end
@@ -56,7 +65,9 @@ RSpec.describe 'Comments', type: :request do
 
       response '201', 'Created Comment' do
         it 'returns created Comment' do |example|
-          params = { data: { type: :comments, attributes: { body: 'New awesome comment!' } } }
+          params = { data: { type: :comments, attributes: {
+            body: 'New awesome comment!'
+          } } }
 
           post api_v1_task_comments_path(task), params: params, headers: tokens
 

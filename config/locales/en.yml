@@ -2,3 +2,6 @@ en:
   task:
     validation:
       due_date_error: "can not be in the past"
+  comment:
+    validation:
+      file_max_size: "is too large (max is 10 MB)"
