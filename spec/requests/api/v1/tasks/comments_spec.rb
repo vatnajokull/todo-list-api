@@ -82,7 +82,7 @@ RSpec.describe 'Comments', type: :request do
 
   #  ------------------------------------------------------------------------------------------------------------------
 
-  path '/comments/{id}' do
+  path '/api/v1/comments/{id}' do
     delete 'Deletes the Comment' do
       tags 'Comments'
 

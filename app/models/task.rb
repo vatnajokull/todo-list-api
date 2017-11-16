@@ -6,6 +6,8 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validate :due_date_cannot_be_in_the_past, if: :due_date_changed?
 
+  scope :ordered, -> { order(position: :asc) }
+
   private
 
   def due_date_cannot_be_in_the_past

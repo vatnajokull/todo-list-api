@@ -10,14 +10,4 @@ RSpec.describe PositionPolicy do
       expect(subject).to permit(user, task)
     end
   end
-
-  permissions '.scope' do
-    it 'returns Tasks that belongs to Project' do
-      expect(PositionPolicy::Scope.new(user, Task.all).resolve).to include(task)
-    end
-
-    it 'does not return Tasks that do not belong to Project' do
-      expect(PositionPolicy::Scope.new(User.new, Task.all).resolve).not_to include(task)
-    end
-  end
 end

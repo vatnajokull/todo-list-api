@@ -2,7 +2,7 @@ RSpec.describe CommentPolicy do
   let(:user) { create(:user) }
   let(:project) { create(:project, user: user) }
   let(:task) { create(:task, project: project) }
-  let(:comment) { create(:comment, task: task) }
+  let!(:comment) { create(:comment, task: task) }
 
   subject { described_class }
 
@@ -14,8 +14,6 @@ RSpec.describe CommentPolicy do
 
   permissions '.scope' do
     it 'returns Comments that belongs to Task' do
-      user
-      comment
       expect(CommentPolicy::Scope.new(user, Comment.all).resolve).to include(comment)
     end
 
