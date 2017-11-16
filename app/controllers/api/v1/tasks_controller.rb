@@ -2,7 +2,7 @@ module Api
   module V1
     class TasksController < ApiController
       def index
-        jsonapi_render json: policy_scope(Task).all
+        jsonapi_render json: policy_scope(Task).ordered
       end
 
       def show

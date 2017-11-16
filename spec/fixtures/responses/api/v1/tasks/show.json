@@ -1,9 +1,9 @@
 {
   "data": {
     "attributes": {
-      "comments-count": 0,
+      "commentsCount": 0,
        "done": false,
-       "due-date": null,
+       "dueDate": null,
        "name": "Task name",
        "position": 0
     },

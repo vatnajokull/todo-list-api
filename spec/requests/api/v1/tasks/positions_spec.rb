@@ -1,4 +1,4 @@
-RSpec.describe 'Comments', type: :request do
+RSpec.describe 'Positions', type: :request do
   let(:user) { create(:user) }
   let(:tokens) { user.create_new_auth_token }
   let(:project) { create(:project, user: user) }
