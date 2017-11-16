@@ -11,10 +11,10 @@
     },
     { "title": "can not be in the past",
       "detail": "Due date can not be in the past",
-      "id": "due_date#can_not_be_in_the_past",
+      "id": "dueDate#can_not_be_in_the_past",
       "code": "100",
       "source": {
-        "pointer": "/data/attributes/due_date"
+        "pointer": "/data/attributes/dueDate"
         },
       "status": "422"}
       ]

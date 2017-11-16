@@ -14,8 +14,10 @@ Rails.application.routes.draw do
 
       jsonapi_resources :projects, only: %i[index show create update destroy] do
         jsonapi_resources :tasks, only: %i[index show create update destroy], shallow: true do
-          jsonapi_resource :position, only: :update
-          jsonapi_resources :comments, only: %i[index create destroy]
+          scope module: :tasks do
+            jsonapi_resources :comments, only: %i[index create destroy]
+            jsonapi_resource :position, only: :update
+          end
         end
       end
     end

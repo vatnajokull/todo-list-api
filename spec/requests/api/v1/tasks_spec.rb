@@ -136,7 +136,7 @@ RSpec.describe 'Tasks', type: :request do
         it 'returns updated Task' do |example|
           params = { data: { id: task.id, type: :tasks, attributes: {
             name: 'New task name',
-            due_date: '2099-12-31T23:59:59+02:00'
+            dueDate: '2099-12-31T23:59:59+02:00'
           } } }
 
           patch api_v1_task_path(task), params: params, headers: tokens
@@ -153,7 +153,7 @@ RSpec.describe 'Tasks', type: :request do
         it 'returns an error if name is empty or due_date in the past' do |example|
           params = { data: { id: task.id, type: :tasks, attributes: {
             name: '',
-            due_date: '1999-12-31T23:59:59+02:00'
+            dueDate: '1999-12-31T23:59:59+02:00'
           } } }
 
           patch api_v1_task_path(task), params: params, headers: tokens
