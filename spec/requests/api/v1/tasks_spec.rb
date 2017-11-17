@@ -118,7 +118,8 @@ RSpec.describe 'Tasks', type: :request do
               type: { type: :string },
               attributes: {
                 properties: {
-                  name: { type: :string }
+                  name: { type: :string },
+                  dueDate: { type: :string }
                 },
                 required: [:name]
               }
@@ -133,7 +134,10 @@ RSpec.describe 'Tasks', type: :request do
 
       response '201', 'Updated Task' do
         it 'returns updated Task' do |example|
-          params = { data: { id: task.id, type: :tasks, attributes: { name: 'New task name' } } }
+          params = { data: { id: task.id, type: :tasks, attributes: {
+            name: 'New task name',
+            dueDate: '2099-12-31T23:59:59+02:00'
+          } } }
 
           patch api_v1_task_path(task), params: params, headers: tokens
 
@@ -146,13 +150,20 @@ RSpec.describe 'Tasks', type: :request do
       end
 
       response '422', 'Validation errors' do
-        it 'returns an error' do |example|
-          params = { data: { id: task.id, type: :tasks, attributes: { name: '' } } }
+        it 'returns an error if name is empty or due_date in the past' do |example|
+          params = { data: { id: task.id, type: :tasks, attributes: {
+            name: '',
+            dueDate: '1999-12-31T23:59:59+02:00'
+          } } }
 
           patch api_v1_task_path(task), params: params, headers: tokens
 
+          expect(body).to be_json_eql response_schema(:tasks, :errors).to_json
+
           assert_response_matches_metadata(example.metadata)
         end
+
+        examples 'application/vnd.api+json' => response_schema(:tasks, :errors)
       end
     end
   end

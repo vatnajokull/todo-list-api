@@ -103,6 +103,50 @@
         }
       }
     },
+    "/auth/sign_out": {
+      "delete": {
+        "summary": "Sign out User",
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "uid",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Signed out",
+            "examples": {
+              "application/json": {
+                "success": true
+              }
+            }
+          },
+          "404": {
+            "description": "User was not found or was not logged in."
+          }
+        }
+      }
+    },
     "/auth": {
       "post": {
         "summary": "User registration",
@@ -403,6 +447,198 @@
         }
       }
     },
+    "/tasks/{task_id}/comments": {
+      "get": {
+        "summary": "A list of Comments",
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Comments",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": [
+                  {
+                    "attributes": {
+                      "body": "New awesome comment",
+                      "image": null
+                    },
+                    "type": "comments"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a Comment",
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "attributes": {
+                      "properties": {
+                        "body": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string",
+                          "format": "binary"
+                        }
+                      },
+                      "required": [
+                        "body"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created Comment",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "body": "New awesome comment!",
+                    "image": null
+                  },
+                  "type": "comments"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation errors"
+          }
+        }
+      }
+    },
+    "/comments/{comment_id}": {
+      "delete": {
+        "summary": "Deletes the Comment",
+        "tags": [
+          "Comments"
+        ],
+        "parameters": [
+          {
+            "name": "comment_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns nothing"
+          }
+        }
+      }
+    },
+    "/tasks/{task_id}/position": {
+      "patch": {
+        "summary": "Change Position of Task",
+        "tags": [
+          "Positions"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "position",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "attributes": {
+                      "properties": {
+                        "position": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "position"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "posiition"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Changed Position",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "id": "35",
+                  "type": "positions",
+                  "attributes": {
+                    "position": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/projects/{project_id}/tasks": {
       "get": {
         "summary": "A list of Tasks",
@@ -425,7 +661,15 @@
                 "data": [
                   {
                     "attributes": {
-                      "name": "Task name"
+                      "commentsCount": 0,
+                      "done": false,
+                      "dueDate": null,
+                      "name": "Task name",
+                      "position": 0
+                    },
+                    "relationships": {
+                      "comments": {
+                      }
                     },
                     "type": "tasks"
                   }
@@ -487,7 +731,15 @@
               "application/vnd.api+json": {
                 "data": {
                   "attributes": {
-                    "name": "Task name"
+                    "commentsCount": 0,
+                    "done": false,
+                    "dueDate": null,
+                    "name": "Task name",
+                    "position": 0
+                  },
+                  "relationships": {
+                    "comments": {
+                    }
                   },
                   "type": "tasks"
                 }
@@ -521,7 +773,15 @@
               "application/vnd.api+json": {
                 "data": {
                   "attributes": {
-                    "name": "Task name"
+                    "commentsCount": 0,
+                    "done": false,
+                    "dueDate": null,
+                    "name": "Task name",
+                    "position": 0
+                  },
+                  "relationships": {
+                    "comments": {
+                    }
                   },
                   "type": "tasks"
                 }
@@ -560,6 +820,9 @@
                       "properties": {
                         "name": {
                           "type": "string"
+                        },
+                        "dueDate": {
+                          "type": "string"
                         }
                       },
                       "required": [
@@ -586,7 +849,15 @@
               "application/vnd.api+json": {
                 "data": {
                   "attributes": {
-                    "name": "New task name"
+                    "commentsCount": 0,
+                    "done": false,
+                    "dueDate": "2099-12-31T23:59:59.000+02:00",
+                    "name": "New task name",
+                    "position": 0
+                  },
+                  "relationships": {
+                    "comments": {
+                    }
                   },
                   "type": "tasks"
                 }
@@ -594,7 +865,33 @@
             }
           },
           "422": {
-            "description": "Validation errors"
+            "description": "Validation errors",
+            "examples": {
+              "application/vnd.api+json": {
+                "errors": [
+                  {
+                    "title": "can't be blank",
+                    "detail": "Name can't be blank",
+                    "id": "name#blank",
+                    "code": "100",
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "status": "422"
+                  },
+                  {
+                    "title": "can not be in the past",
+                    "detail": "Due date can not be in the past",
+                    "id": "dueDate#can_not_be_in_the_past",
+                    "code": "100",
+                    "source": {
+                      "pointer": "/data/attributes/dueDate"
+                    },
+                    "status": "422"
+                  }
+                ]
+              }
+            }
           }
         }
       },

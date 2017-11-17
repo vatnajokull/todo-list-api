@@ -12,8 +12,13 @@ Rails.application.routes.draw do
                                   },
                                   skip: %i[passwords invitations omniauth_callbacks]
 
-      jsonapi_resources :projects, only: %i[index show create update destroy], shallow: true do
-        jsonapi_resources :tasks, only: %i[index show create update destroy]
+      jsonapi_resources :projects, only: %i[index show create update destroy] do
+        jsonapi_resources :tasks, only: %i[index show create update destroy], shallow: true do
+          scope module: :tasks do
+            jsonapi_resources :comments, only: %i[index create destroy]
+            jsonapi_resource :position, only: :update
+          end
+        end
       end
     end
   end
