@@ -15,6 +15,7 @@ RSpec.describe 'Positions', type: :request do
         properties: {
           data: {
             properties: {
+              id: { type: :string },
               type: { type: :string },
               attributes: {
                 properties: {
@@ -23,7 +24,7 @@ RSpec.describe 'Positions', type: :request do
                 required: [:position]
               }
             },
-            required: [:type]
+            required: %i[id posiition]
           }
         },
         required: [:data]
