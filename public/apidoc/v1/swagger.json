@@ -103,6 +103,50 @@
         }
       }
     },
+    "/auth/sign_out": {
+      "delete": {
+        "summary": "Sign out User",
+        "tags": [
+          "Authentication"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "uid",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User Signed out",
+            "examples": {
+              "application/json": {
+                "success": true
+              }
+            }
+          },
+          "404": {
+            "description": "User was not found or was not logged in."
+          }
+        }
+      }
+    },
     "/auth": {
       "post": {
         "summary": "User registration",
@@ -506,7 +550,7 @@
         }
       }
     },
-    "/api/v1/comments/{id}": {
+    "/comments/{comment_id}": {
       "delete": {
         "summary": "Deletes the Comment",
         "tags": [
@@ -548,6 +592,9 @@
               "properties": {
                 "data": {
                   "properties": {
+                    "id": {
+                      "type": "string"
+                    },
                     "type": {
                       "type": "string"
                     },
@@ -563,7 +610,8 @@
                     }
                   },
                   "required": [
-                    "type"
+                    "id",
+                    "posiition"
                   ]
                 }
               },
@@ -579,10 +627,11 @@
             "examples": {
               "application/vnd.api+json": {
                 "data": {
+                  "id": "35",
+                  "type": "positions",
                   "attributes": {
-                    "position": "3"
-                  },
-                  "type": "tasks"
+                    "position": 2
+                  }
                 }
               }
             }
@@ -772,7 +821,7 @@
                         "name": {
                           "type": "string"
                         },
-                        "due_date": {
+                        "dueDate": {
                           "type": "string"
                         }
                       },
