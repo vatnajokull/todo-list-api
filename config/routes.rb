@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           scope module: :tasks do
             jsonapi_resources :comments, only: %i[index create destroy]
             jsonapi_resource :position, only: :update
+            jsonapi_resource :complete, only: :update
           end
         end
       end

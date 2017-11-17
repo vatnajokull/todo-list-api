@@ -571,6 +571,71 @@
         }
       }
     },
+    "/tasks/{task_id}/complete": {
+      "patch": {
+        "summary": "Mark Task as completed",
+        "tags": [
+          "Complete"
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "data": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "data"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Toggle Completed Task",
+            "examples": {
+              "application/vnd.api+json": {
+                "data": {
+                  "attributes": {
+                    "commentsCount": 0,
+                    "done": true,
+                    "dueDate": null,
+                    "name": "New task",
+                    "position": 3
+                  },
+                  "relationships": {
+                    "comments": {
+                    }
+                  },
+                  "type": "positions"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tasks/{task_id}/position": {
       "patch": {
         "summary": "Change Position of Task",
