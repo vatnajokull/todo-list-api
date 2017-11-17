@@ -3,6 +3,7 @@ RSpec.describe Comment, type: :model do
 
   context 'Structure' do
     it { is_expected.to have_db_column(:body).of_type(:text) }
+    it { is_expected.to have_db_column(:image_data).of_type(:text) }
   end
 
   context 'Associations' do

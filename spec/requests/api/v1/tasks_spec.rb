@@ -119,7 +119,7 @@ RSpec.describe 'Tasks', type: :request do
               attributes: {
                 properties: {
                   name: { type: :string },
-                  due_date: { type: :string }
+                  dueDate: { type: :string }
                 },
                 required: [:name]
               }

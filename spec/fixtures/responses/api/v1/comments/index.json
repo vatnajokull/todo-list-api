@@ -2,7 +2,8 @@
   "data": [
     {
       "attributes": {
-        "body": "New awesome comment"
+        "body": "New awesome comment",
+        "image": null
       },
       "type": "comments"
     }
