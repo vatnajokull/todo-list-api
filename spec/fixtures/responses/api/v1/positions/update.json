@@ -1,8 +1,9 @@
 {
   "data": {
+    "id": "35",
+    "type": "positions",
     "attributes": {
-      "position": "3"
-    },
-    "type": "tasks"
+      "position": 2
+    }
   }
 }

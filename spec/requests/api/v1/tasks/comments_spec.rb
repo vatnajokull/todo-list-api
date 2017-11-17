@@ -100,7 +100,7 @@ RSpec.describe 'Comments', type: :request do
 
   #  ------------------------------------------------------------------------------------------------------------------
 
-  path '/api/v1/comments/{id}' do
+  path '/comments/{comment_id}' do
     delete 'Deletes the Comment' do
       tags 'Comments'
 
@@ -110,7 +110,7 @@ RSpec.describe 'Comments', type: :request do
         let(:comment) { create(:comment, task: task) }
 
         it 'deletes the Comment' do |example|
-          params = { data: { id: comment.id, type: :tasks } }
+          params = { data: { id: comment.id, type: :comments } }
 
           delete api_v1_comment_path(comment), params: params, headers: tokens
 
