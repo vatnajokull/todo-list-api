@@ -6,10 +6,12 @@ RSpec.describe Task, type: :model do
     it { is_expected.to have_db_column(:name).of_type(:string) }
     it { is_expected.to have_db_column(:done).of_type(:boolean) }
     it { is_expected.to have_db_column(:due_date).of_type(:datetime) }
+    it { is_expected.to have_db_column(:position).of_type(:integer).with_options(default: 0) }
   end
 
   context 'Associations' do
     it { is_expected.to belong_to(:project) }
+    it { is_expected.to have_many(:comments).dependent(:destroy) }
   end
 
   context 'Validations' do
