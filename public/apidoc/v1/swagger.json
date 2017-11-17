@@ -425,7 +425,8 @@
                 "data": [
                   {
                     "attributes": {
-                      "body": "New awesome comment"
+                      "body": "New awesome comment",
+                      "image": null
                     },
                     "type": "comments"
                   }
@@ -462,6 +463,10 @@
                       "properties": {
                         "body": {
                           "type": "string"
+                        },
+                        "image": {
+                          "type": "string",
+                          "format": "binary"
                         }
                       },
                       "required": [
@@ -487,7 +492,8 @@
               "application/vnd.api+json": {
                 "data": {
                   "attributes": {
-                    "body": "New awesome comment!"
+                    "body": "New awesome comment!",
+                    "image": null
                   },
                   "type": "comments"
                 }
@@ -508,7 +514,7 @@
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "comment_id",
             "in": "path",
             "type": "integer",
             "required": true
